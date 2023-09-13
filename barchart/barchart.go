@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ajstarks/svgo"
+	"github.com/silence-lml/svgo"
 )
 
 var (

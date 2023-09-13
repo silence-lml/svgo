@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ajstarks/svgo"
+	"github.com/silence-lml/svgo"
 )
 
 var (

@@ -4,7 +4,7 @@ package svg
 // package main
 //
 // 	import (
-// 		"github.com/ajstarks/svgo/float"
+// 		"github.com/silence-lml/svgo/float"
 // 		"os"
 // 	)
 //

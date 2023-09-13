@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	svg "github.com/ajstarks/svgo"
+	svg "github.com/silence-lml/svgo"
 )
 
 func main() {
