@@ -503,6 +503,15 @@ func (svg *SVG) LinearGradient(id string, x1, y1, x2, y2 uint8, sc []Offcolor) {
 	svg.println("</linearGradient>")
 }
 
+// LinearGradient constructs a linear color gradient identified by id,
+// along the vector defined by (x1,y1), and (x2,y2).
+// The stop color sequence defined in sc. Coordinates are expressed as percentages.
+func (svg *SVG) LinearGradient2(id string, x1, y1, x2, y2 float64, xlinkHref string) {
+	svg.printf("<linearGradient id=\"%s\" x1=\"%.*f\" y1=\"%.*f\" x2=\"%.*f\" y2=\"%.*f\" xlink:href=\"%s\">\n",
+		id, x1, svg.Decimals, y1, svg.Decimals, x2, svg.Decimals, y2, svg.Decimals, xlinkHref)
+	svg.println("</linearGradient>")
+}
+
 // RadialGradient constructs a radial color gradient identified by id,
 // centered at (cx,cy), with a radius of r.
 // (fx, fy) define the location of the focal point of the light source.
