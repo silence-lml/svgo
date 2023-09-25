@@ -516,10 +516,10 @@ func (svg *SVG) LinearGradient(id string, x1, y1, x2, y2 uint8, sc []Offcolor) {
 func (svg *SVG) LinearGradientStart(id string, x1, y1, x2, y2 float64, xlinkHref string, gradientUnits string, gradientTransform string) {
 	if gradientTransform != "" {
 		svg.printf("<linearGradient id=\"%s\" x1=\"%.*f\" y1=\"%.*f\" x2=\"%.*f\" y2=\"%.*f\" xlink:href=\"%s\" gradientUnits=\"%s\" gradientTransform=\"%s\">\n",
-			id, x1, svg.Decimals, y1, svg.Decimals, x2, svg.Decimals, y2, svg.Decimals, xlinkHref, gradientUnits, gradientTransform)
+			id, svg.Decimals, x1, svg.Decimals, y1, svg.Decimals, x2, svg.Decimals, y2, xlinkHref, gradientUnits, gradientTransform)
 	} else {
 		svg.printf("<linearGradient id=\"%s\" x1=\"%.*f\" y1=\"%.*f\" x2=\"%.*f\" y2=\"%.*f\" xlink:href=\"%s\" gradientUnits=\"%s\">\n",
-			id, x1, svg.Decimals, y1, svg.Decimals, x2, svg.Decimals, y2, svg.Decimals, xlinkHref, gradientUnits)
+			id, svg.Decimals, x1, svg.Decimals, y1, svg.Decimals, x2, svg.Decimals, y2, xlinkHref, gradientUnits)
 	}
 }
 
@@ -545,10 +545,10 @@ func (svg *SVG) RadialGradient(id string, cx, cy, r, fx, fy uint8, sc []Offcolor
 func (svg *SVG) RadialGradientStart(id string, cx, cy, fx, fy, r float64, gradientUnits string, gradientTransform string) {
 	if gradientTransform != "" {
 		svg.printf("<radialGradient id=\"%s\" cx=\"%.*f\" cy=\"%.*f\" fx=\"%.*f\" fy=\"%.*f\" r=\"%.*f\" gradientUnits=\"%s\" gradientTransform=\"%s\">\n",
-			id, cx, svg.Decimals, cy, svg.Decimals, fx, svg.Decimals, fy, svg.Decimals, r, svg.Decimals, gradientUnits, gradientTransform)
+			id, svg.Decimals, cx, svg.Decimals, cy, svg.Decimals, fx, svg.Decimals, fy, svg.Decimals, r, gradientUnits, gradientTransform)
 	} else {
 		svg.printf("<radialGradient id=\"%s\" cx=\"%.*f\" cy=\"%.*f\" fx=\"%.*f\" fy=\"%.*f\" r=\"%.*f\" gradientUnits=\"%s\">\n",
-			id, cx, svg.Decimals, cy, svg.Decimals, fx, svg.Decimals, fy, svg.Decimals, r, svg.Decimals, gradientUnits)
+			id, svg.Decimals, cx, svg.Decimals, cy, svg.Decimals, fx, svg.Decimals, fy, svg.Decimals, gradientUnits)
 	}
 }
 
@@ -571,10 +571,10 @@ func (svg *SVG) StopColor2(oc []Offcolor2) {
 	for _, v := range oc {
 		if v.Opacity == 0 {
 			svg.printf("<stop offset=\"%.*f\" stop-color=\"%s\"/>\n",
-				v.Offset, svg.Decimals, v.Color)
+				svg.Decimals, v.Offset, v.Color)
 		} else {
 			svg.printf("<stop offset=\"%.*f\" stop-color=\"%s\" stop-opacity=\"%.2f\"/>\n",
-				v.Offset, svg.Decimals, v.Color, v.Opacity)
+				svg.Decimals, v.Offset, v.Color, v.Opacity)
 		}
 	}
 }
