@@ -44,6 +44,13 @@ type Offcolor struct {
 	Opacity float64
 }
 
+// Offcolor defines the offset and color for gradients
+type Offcolor2 struct {
+	Offset  float64
+	Color   string
+	Opacity float64
+}
+
 // Filterspec defines the specification of SVG filters
 type Filterspec struct {
 	In, In2, Result string
@@ -499,16 +506,19 @@ func (svg *SVG) RGBA(r int, g int, b int, a float64) string {
 func (svg *SVG) LinearGradient(id string, x1, y1, x2, y2 uint8, sc []Offcolor) {
 	svg.printf("<linearGradient id=\"%s\" x1=\"%d%%\" y1=\"%d%%\" x2=\"%d%%\" y2=\"%d%%\">\n",
 		id, pct(x1), pct(y1), pct(x2), pct(y2))
-	svg.stopcolor(sc)
+	svg.StopColor(sc)
 	svg.println("</linearGradient>")
 }
 
 // LinearGradient constructs a linear color gradient identified by id,
 // along the vector defined by (x1,y1), and (x2,y2).
 // The stop color sequence defined in sc. Coordinates are expressed as percentages.
-func (svg *SVG) LinearGradient2(id string, x1, y1, x2, y2 float64, xlinkHref string) {
+func (svg *SVG) LinearGradientStart(id string, x1, y1, x2, y2 float64, xlinkHref string) {
 	svg.printf("<linearGradient id=\"%s\" x1=\"%.*f\" y1=\"%.*f\" x2=\"%.*f\" y2=\"%.*f\" xlink:href=\"%s\">\n",
 		id, x1, svg.Decimals, y1, svg.Decimals, x2, svg.Decimals, y2, svg.Decimals, xlinkHref)
+}
+
+func (svg *SVG) LinearGradientEnd() {
 	svg.println("</linearGradient>")
 }
 
@@ -520,25 +530,37 @@ func (svg *SVG) LinearGradient2(id string, x1, y1, x2, y2 float64, xlinkHref str
 func (svg *SVG) RadialGradient(id string, cx, cy, r, fx, fy uint8, sc []Offcolor) {
 	svg.printf("<radialGradient id=\"%s\" cx=\"%d%%\" cy=\"%d%%\" r=\"%d%%\" fx=\"%d%%\" fy=\"%d%%\">\n",
 		id, pct(cx), pct(cy), pct(r), pct(fx), pct(fy))
-	svg.stopcolor(sc)
+	svg.StopColor(sc)
 	svg.println("</radialGradient>")
 }
 
 // LinearGradient constructs a linear color gradient identified by id,
 // along the vector defined by (x1,y1), and (x2,y2).
 // The stop color sequence defined in sc. Coordinates are expressed as percentages.
-func (svg *SVG) RadialGradient2(id string, cx, cy, fx, fy, r float64, gradientUnits string) {
+func (svg *SVG) RadialGradientStart(id string, cx, cy, fx, fy, r float64, gradientUnits string) {
 	svg.printf("<radialGradient id=\"%s\" cx=\"%.*f\" cy=\"%.*f\" fx=\"%.*f\" fy=\"%.*f\" r=\"%.*f\" gradientUnits=\"%s\">\n",
 		id, cx, svg.Decimals, cy, svg.Decimals, fx, svg.Decimals, fy, svg.Decimals, r, svg.Decimals, gradientUnits)
+}
+
+func (svg *SVG) RadialGradientEnd() {
 	svg.println("</radialGradient>")
 }
 
-// stopcolor is a utility function used by the gradient functions
+// StopColor is a utility function used by the gradient functions
 // to define a sequence of offsets (expressed as percentages) and colors
-func (svg *SVG) stopcolor(oc []Offcolor) {
+func (svg *SVG) StopColor(oc []Offcolor) {
 	for _, v := range oc {
 		svg.printf("<stop offset=\"%d%%\" stop-color=\"%s\" stop-opacity=\"%.2f\"/>\n",
 			pct(v.Offset), v.Color, v.Opacity)
+	}
+}
+
+// StopColor is a utility function used by the gradient functions
+// to define a sequence of offsets (expressed as percentages) and colors
+func (svg *SVG) StopColor2(oc []Offcolor2) {
+	for _, v := range oc {
+		svg.printf("<stop offset=\"%.*f\" stop-color=\"%s\" stop-opacity=\"%.2f\"/>\n",
+			v.Offset, svg.Decimals, v.Color, v.Opacity)
 	}
 }
 
