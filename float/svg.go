@@ -559,8 +559,13 @@ func (svg *SVG) StopColor(oc []Offcolor) {
 // to define a sequence of offsets (expressed as percentages) and colors
 func (svg *SVG) StopColor2(oc []Offcolor2) {
 	for _, v := range oc {
-		svg.printf("<stop offset=\"%.*f\" stop-color=\"%s\" stop-opacity=\"%.2f\"/>\n",
-			v.Offset, svg.Decimals, v.Color, v.Opacity)
+		if v.Opacity == 0 {
+			svg.printf("<stop offset=\"%.*f\" stop-color=\"%s\"/>\n",
+				v.Offset, svg.Decimals, v.Color)
+		} else {
+			svg.printf("<stop offset=\"%.*f\" stop-color=\"%s\" stop-opacity=\"%.2f\"/>\n",
+				v.Offset, svg.Decimals, v.Color, v.Opacity)
+		}
 	}
 }
 
