@@ -513,9 +513,14 @@ func (svg *SVG) LinearGradient(id string, x1, y1, x2, y2 uint8, sc []Offcolor) {
 // LinearGradient constructs a linear color gradient identified by id,
 // along the vector defined by (x1,y1), and (x2,y2).
 // The stop color sequence defined in sc. Coordinates are expressed as percentages.
-func (svg *SVG) LinearGradientStart(id string, x1, y1, x2, y2 float64, xlinkHref string) {
-	svg.printf("<linearGradient id=\"%s\" x1=\"%.*f\" y1=\"%.*f\" x2=\"%.*f\" y2=\"%.*f\" xlink:href=\"%s\">\n",
-		id, x1, svg.Decimals, y1, svg.Decimals, x2, svg.Decimals, y2, svg.Decimals, xlinkHref)
+func (svg *SVG) LinearGradientStart(id string, x1, y1, x2, y2 float64, xlinkHref string, gradientUnits string, gradientTransform string) {
+	if gradientTransform != "" {
+		svg.printf("<linearGradient id=\"%s\" x1=\"%.*f\" y1=\"%.*f\" x2=\"%.*f\" y2=\"%.*f\" xlink:href=\"%s\" gradientUnits=\"%s\" gradientTransform=\"%s\">\n",
+			id, x1, svg.Decimals, y1, svg.Decimals, x2, svg.Decimals, y2, svg.Decimals, xlinkHref, gradientUnits, gradientTransform)
+	} else {
+		svg.printf("<linearGradient id=\"%s\" x1=\"%.*f\" y1=\"%.*f\" x2=\"%.*f\" y2=\"%.*f\" xlink:href=\"%s\" gradientUnits=\"%s\">\n",
+			id, x1, svg.Decimals, y1, svg.Decimals, x2, svg.Decimals, y2, svg.Decimals, xlinkHref, gradientUnits)
+	}
 }
 
 func (svg *SVG) LinearGradientEnd() {
