@@ -524,6 +524,15 @@ func (svg *SVG) RadialGradient(id string, cx, cy, r, fx, fy uint8, sc []Offcolor
 	svg.println("</radialGradient>")
 }
 
+// LinearGradient constructs a linear color gradient identified by id,
+// along the vector defined by (x1,y1), and (x2,y2).
+// The stop color sequence defined in sc. Coordinates are expressed as percentages.
+func (svg *SVG) RadialGradient2(id string, cx, cy, fx, fy, r float64, gradientUnits string) {
+	svg.printf("<radialGradient id=\"%s\" cx=\"%.*f\" cy=\"%.*f\" fx=\"%.*f\" fy=\"%.*f\" r=\"%.*f\" gradientUnits=\"%s\">\n",
+		id, cx, svg.Decimals, cy, svg.Decimals, fx, svg.Decimals, fy, svg.Decimals, r, svg.Decimals, gradientUnits)
+	svg.println("</radialGradient>")
+}
+
 // stopcolor is a utility function used by the gradient functions
 // to define a sequence of offsets (expressed as percentages) and colors
 func (svg *SVG) stopcolor(oc []Offcolor) {
