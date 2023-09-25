@@ -514,13 +514,22 @@ func (svg *SVG) LinearGradient(id string, x1, y1, x2, y2 uint8, sc []Offcolor) {
 // along the vector defined by (x1,y1), and (x2,y2).
 // The stop color sequence defined in sc. Coordinates are expressed as percentages.
 func (svg *SVG) LinearGradientStart(id string, x1, y1, x2, y2 float64, xlinkHref string, gradientUnits string, gradientTransform string) {
-	if gradientTransform != "" {
-		svg.printf("<linearGradient id=\"%s\" x1=\"%.*f\" y1=\"%.*f\" x2=\"%.*f\" y2=\"%.*f\" xlink:href=\"%s\" gradientUnits=\"%s\" gradientTransform=\"%s\">\n",
-			id, svg.Decimals, x1, svg.Decimals, y1, svg.Decimals, x2, svg.Decimals, y2, xlinkHref, gradientUnits, gradientTransform)
-	} else {
-		svg.printf("<linearGradient id=\"%s\" x1=\"%.*f\" y1=\"%.*f\" x2=\"%.*f\" y2=\"%.*f\" xlink:href=\"%s\" gradientUnits=\"%s\">\n",
-			id, svg.Decimals, x1, svg.Decimals, y1, svg.Decimals, x2, svg.Decimals, y2, xlinkHref, gradientUnits)
+	var params []string
+	params = append(params, fmt.Sprintf("id=\"%s\"", id))
+	params = append(params, fmt.Sprintf("x1=\"%.*f\"", svg.Decimals, x1))
+	params = append(params, fmt.Sprintf("y1=\"%.*f\"", svg.Decimals, y1))
+	params = append(params, fmt.Sprintf("x2=\"%.*f\"", svg.Decimals, x2))
+	params = append(params, fmt.Sprintf("y2=\"%.*f\"", svg.Decimals, y2))
+	if xlinkHref != "" {
+		params = append(params, fmt.Sprintf("xlink:href=\"%s\"", xlinkHref))
 	}
+	if gradientUnits != "" {
+		params = append(params, fmt.Sprintf("gradientUnits=\"%s\"", gradientUnits))
+	}
+	if gradientTransform != "" {
+		params = append(params, fmt.Sprintf("gradientTransform=\"%s\"", gradientTransform))
+	}
+	svg.printf("<linearGradient %s>\n", strings.Join(params, " "))
 }
 
 func (svg *SVG) LinearGradientEnd() {
@@ -543,13 +552,21 @@ func (svg *SVG) RadialGradient(id string, cx, cy, r, fx, fy uint8, sc []Offcolor
 // along the vector defined by (x1,y1), and (x2,y2).
 // The stop color sequence defined in sc. Coordinates are expressed as percentages.
 func (svg *SVG) RadialGradientStart(id string, cx, cy, fx, fy, r float64, gradientUnits string, gradientTransform string) {
-	if gradientTransform != "" {
-		svg.printf("<radialGradient id=\"%s\" cx=\"%.*f\" cy=\"%.*f\" fx=\"%.*f\" fy=\"%.*f\" r=\"%.*f\" gradientUnits=\"%s\" gradientTransform=\"%s\">\n",
-			id, svg.Decimals, cx, svg.Decimals, cy, svg.Decimals, fx, svg.Decimals, fy, svg.Decimals, r, gradientUnits, gradientTransform)
-	} else {
-		svg.printf("<radialGradient id=\"%s\" cx=\"%.*f\" cy=\"%.*f\" fx=\"%.*f\" fy=\"%.*f\" r=\"%.*f\" gradientUnits=\"%s\">\n",
-			id, svg.Decimals, cx, svg.Decimals, cy, svg.Decimals, fx, svg.Decimals, fy, svg.Decimals, gradientUnits)
+	var params []string
+	params = append(params, fmt.Sprintf("id=\"%s\"", id))
+	params = append(params, fmt.Sprintf("cx=\"%.*f\"", svg.Decimals, cx))
+	params = append(params, fmt.Sprintf("cy=\"%.*f\"", svg.Decimals, cy))
+	params = append(params, fmt.Sprintf("fx=\"%.*f\"", svg.Decimals, fx))
+	params = append(params, fmt.Sprintf("fy=\"%.*f\"", svg.Decimals, fy))
+	params = append(params, fmt.Sprintf("r=\"%.*f\"", svg.Decimals, r))
+	if gradientUnits != "" {
+		params = append(params, fmt.Sprintf("gradientUnits=\"%s\"", gradientUnits))
 	}
+	if gradientTransform != "" {
+		params = append(params, fmt.Sprintf("gradientTransform=\"%s\"", gradientTransform))
+	}
+
+	svg.printf("<radialGradient %s>\n", strings.Join(params, " "))
 }
 
 func (svg *SVG) RadialGradientEnd() {
