@@ -537,9 +537,14 @@ func (svg *SVG) RadialGradient(id string, cx, cy, r, fx, fy uint8, sc []Offcolor
 // LinearGradient constructs a linear color gradient identified by id,
 // along the vector defined by (x1,y1), and (x2,y2).
 // The stop color sequence defined in sc. Coordinates are expressed as percentages.
-func (svg *SVG) RadialGradientStart(id string, cx, cy, fx, fy, r float64, gradientUnits string) {
-	svg.printf("<radialGradient id=\"%s\" cx=\"%.*f\" cy=\"%.*f\" fx=\"%.*f\" fy=\"%.*f\" r=\"%.*f\" gradientUnits=\"%s\">\n",
-		id, cx, svg.Decimals, cy, svg.Decimals, fx, svg.Decimals, fy, svg.Decimals, r, svg.Decimals, gradientUnits)
+func (svg *SVG) RadialGradientStart(id string, cx, cy, fx, fy, r float64, gradientUnits string, gradientTransform string) {
+	if gradientTransform != "" {
+		svg.printf("<radialGradient id=\"%s\" cx=\"%.*f\" cy=\"%.*f\" fx=\"%.*f\" fy=\"%.*f\" r=\"%.*f\" gradientUnits=\"%s\" gradientTransform=\"%s\">\n",
+			id, cx, svg.Decimals, cy, svg.Decimals, fx, svg.Decimals, fy, svg.Decimals, r, svg.Decimals, gradientUnits, gradientTransform)
+	} else {
+		svg.printf("<radialGradient id=\"%s\" cx=\"%.*f\" cy=\"%.*f\" fx=\"%.*f\" fy=\"%.*f\" r=\"%.*f\" gradientUnits=\"%s\">\n",
+			id, cx, svg.Decimals, cy, svg.Decimals, fx, svg.Decimals, fy, svg.Decimals, r, svg.Decimals, gradientUnits)
+	}
 }
 
 func (svg *SVG) RadialGradientEnd() {
