@@ -459,6 +459,12 @@ func (svg *SVG) Span(t string, s ...string) {
 	svg.printf(`</tspan>`)
 }
 
+// TextStart start spanned text
+// Standard Reference: http://www.w3.org/TR/SVG11/text.html#TextElement
+func (svg *SVG) TextStart(x float64, y float64, s ...string) {
+	svg.printf(`<text %s %s`, loc(x, y, svg.Decimals), endstyle(s, ">"))
+}
+
 // TextEnd ends spanned text
 // Standard Reference: https://www.w3.org/TR/SVG11/text.html#TSpanElement
 func (svg *SVG) TextEnd() {
