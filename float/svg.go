@@ -447,6 +447,13 @@ func (svg *SVG) Textspan(x float64, y float64, t string, s ...string) {
 	xml.Escape(svg.Writer, []byte(t))
 }
 
+// Textspan begins text, assuming a tspan will be included, end with TextEnd()
+// Standard Reference: https://www.w3.org/TR/SVG11/text.html#TSpanElement
+func (svg *SVG) TextspanNoPosition(t string, s ...string) {
+	svg.printf(`<text %s`, endstyle(s, ">"))
+	xml.Escape(svg.Writer, []byte(t))
+}
+
 // Span makes styled spanned text, should be proceeded by Textspan
 // Standard Reference: https://www.w3.org/TR/SVG11/text.html#TSpanElement
 func (svg *SVG) Span(t string, s ...string) {
